@@ -1,10 +1,10 @@
 import tweepy 
 # Use Tweepy to authenticate twttrmood app with Twitter API.
 
-consumer_key = "xshjYsQMwpDELDEeBWyaizZPD"
-consumer_secret = "WzApKoj3T7NNoH8bsYR3LAYoNJ0Did9mW94o1YtfH1JcIP1u1u"
-access_token = "618524731-7f0j9XCUhxX2fzo6meuVi0S3eCm8ilivKDjFE7ac"
-access_token_secret = "zRYobNbv1H3WvqyY8wg8dDsvJ8Q10ZA4i5MgvDpGs3ZVY"
+consumer_key = ""
+consumer_secret = ""
+access_token = ""
+access_token_secret = ""
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 
