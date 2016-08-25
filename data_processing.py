@@ -1,6 +1,6 @@
-from OAuth import tweets
 import tweepy
-#from stop_words import get_stop_words
+from OAuth import tweets
+from config import stop_words
 
 
 def api_results(tweets):
@@ -27,13 +27,6 @@ def unicode_to_string(list_of_words):
 def remove_stop_words(list_of_words):
 	# removes the stop-words from the list of words.
 	words_without_stop_words = []
-
-	stop_words = ['all', 'just', 'being', 'over', 'both', 'through', 'yourselves', 'its', 'before', 'herself', 'had', 'should', 'to', 'only', 'under', 'ours', 'has', 'do', 'them', 'his', 'very', 'they',
-         'not', 'during', 'now', 'him', 'nor', 'did', 'this', 'she', 'each', 'further', 'where', 'few', 'because', 'doing', 'some', 'are', 'our', 'ourselves', 'out', 'what', 'for', 'while', 'does', 'above', 'between', 't',
-         'be', 'we', 'who', 'were', 'here', 'hers', 'by', 'on', 'about', 'of', 'against', 's', 'or', 'own', 'into', 'yourself', 'down', 'your', 'from', 'her', 'their', 'there', 'been', 'whom', 'too', 'themselves', 'was',
-         'until', 'more', 'himself', 'that', 'but', 'don', 'with', 'than', 'those', 'he', 'me', 'myself', 'these', 'up', 'will', 'below', 'can', 'theirs', 'my', 'and', 'then', 'is', 'am', 'it', 'an', 'as', 'itself', 'at',
-         'have', 'in', 'any', 'if', 'again', 'no', 'when', 'same', 'how', 'other', 'which', 'you', 'after', 'most', 'such', 'why', 'a', 'off', 'i', 'yours', 'so', 'the', 'having', 'once']
-
 	for word in list_of_words:
 		if word not in stop_words:
 			words_without_stop_words.append(word)
@@ -46,6 +39,16 @@ def frequently_used_words(words):
 			wordnum[word] = words.count(word)
 	return wordnum
 
+def sorted_output(wordnum):
+	# changes dict to tuple then does key-value sorting
+	sorted_list = {}
+	sorted_list = wordnum
+	keys = sorted_list.keys()
+	values = sorted_list.values()
+	print "{:>8} {:>8}".format('Frequency', 'Word')
+	sorted_list = [(v, k) for k, v in sorted_list.iteritems()]
+	for v, k in sorted(sorted_list, reverse=True):
+		print "{:>5} {:<12}".format(v, k)
 
 def get_sentiments(words):
 	pass
