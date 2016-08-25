@@ -1,10 +1,21 @@
 import tweepy
-from OAuth import tweets
+from OAuth import *
 from config import stop_words
+from tabulate import tabulate 
 
+'''
+Functions to process the raw Twitter data and output into an ordered tuple of
+words. 
+'''
+
+def get_user_details(handle):  
+	# intro message
+	user = tweets.get_user(handle)
+	print "%s has %s followers!" %(user.screen_name, user.followers_count) 
+	print "Here's a list of %s's favourite words:" %(handle)
 
 def api_results(tweets):
-	# filter the api data to tweets and add to new list
+	# extract tweets from the api data and add to new list
 	tweets_list = []
 	for tweet in tweets:
 		tweets_list.append(tweet.text)
@@ -39,16 +50,19 @@ def frequently_used_words(words):
 			wordnum[word] = words.count(word)
 	return wordnum
 
-def sorted_output(wordnum):
-	# changes dict to tuple then does key-value sorting
+'''
+# changes dict to tuple then does key-value sorting
+'''
+def sorted_output(wordnum): 
 	sorted_list = {}
 	sorted_list = wordnum
 	keys = sorted_list.keys()
 	values = sorted_list.values()
-	print "{:>8} {:>8}".format('Frequency', 'Word')
+	print "{0} \t {1}".format('Frequency', 'Word')	
 	sorted_list = [(v, k) for k, v in sorted_list.iteritems()]
 	for v, k in sorted(sorted_list, reverse=True):
-		print "{:>5} {:<12}".format(v, k)
+		if v >= 5:
+			print "{0} \t\t {1}".format(v, k) 
 
 def get_sentiments(words):
 	pass
