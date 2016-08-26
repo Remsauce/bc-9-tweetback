@@ -1,7 +1,9 @@
+#from __future__ import unicode_literals
 import tweepy
 from OAuth import *
-from config import stop_words
-from tabulate import tabulate 
+from config import stop_words, apikey
+import simplejson as json 
+from watson_developer_cloud import AlchemyLanguageV1
 
 '''
 Functions to process the raw Twitter data and output into an ordered tuple of
@@ -11,8 +13,8 @@ words.
 def get_user_details(handle):  
 	# intro message
 	user = tweets.get_user(handle)
-	print "%s has %s followers!" %(user.screen_name, user.followers_count) 
-	print "Here's a list of %s's favourite words:" %(handle)
+	print "\n%s has %s followers!" %(user.screen_name, user.followers_count) 
+	print "\nHere's a list of %s's favourite words:\n" %(handle)
 
 def api_results(tweets):
 	# extract tweets from the api data and add to new list
@@ -51,7 +53,7 @@ def frequently_used_words(words):
 	return wordnum
 
 '''
-# changes dict to tuple then does key-value sorting
+Changes dict to tuple then does key-value sorting
 '''
 def sorted_output(wordnum): 
 	sorted_list = {}
@@ -64,5 +66,34 @@ def sorted_output(wordnum):
 		if v >= 5:
 			print "{0} \t\t {1}".format(v, k) 
 
-def get_sentiments(words):
-	pass
+def get_sentiments(handle):
+
+	'''Alchemy language API sentiment and emotion analysis'''
+	alchemy_language = AlchemyLanguageV1(api_key=apikey)
+	result_s = (json.dumps(
+	  	alchemy_language.sentiment(
+	   	 url='https://mobile.twitter.com/%s' % (handle)), 
+	  	indent=2))
+	sentiment = json.loads(result_s)
+	
+	print '\n'
+	print emojii 
+	print "\n\t Kim Kardashian's twitter:"
+	print "\t The overall sentiment is:", sentiment['docSentiment']['type'].upper()
+
+	result_e = (json.dumps(
+	alchemy_language.emotion(
+	     	url='https://mobile.twitter.com/%s' % (handle)), 
+	   	indent=2))
+	emotion = json.loads(result_e)
+
+	print "\t The overall emotions are:"#, emotion['docEmotions'][]
+
+	print '\t Anger: ', emotion['docEmotions']['anger']
+	print '\t Joy: ', emotion['docEmotions']['joy']
+	print '\t Fear: ', emotion['docEmotions']['fear']
+	print '\t Sadness: ', emotion['docEmotions']['sadness']
+	print '\t Disgust: ', emotion['docEmotions']['disgust']
+	print '\n'
+	print emojii2
+	print '\n'
