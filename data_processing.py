@@ -78,7 +78,7 @@ def get_sentiments(handle):
 	
 	print '\n'
 	print emojii 
-	print "\n\t Kim Kardashian's twitter:"
+	print "\n\t %s's twitter:" % (handle)
 	print "\t The overall sentiment is:", sentiment['docSentiment']['type'].upper()
 
 	result_e = (json.dumps(
