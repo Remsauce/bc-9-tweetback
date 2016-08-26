@@ -4,7 +4,7 @@ import progressbar
 def progress_bar():
 
 	bar = progressbar.ProgressBar(widgets=[
-    	'Fetching Tweets:  ',
+    	'Fetching Tweets: ',
     	progressbar.Bar(),
     	' (', progressbar.Timer(), ') ',
 	])  
